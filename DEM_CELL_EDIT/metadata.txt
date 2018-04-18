@@ -1,0 +1,43 @@
+# This file contains metadata for your plugin. Since 
+# version 2.0 of QGIS this is the proper way to supply 
+# information about a plugin. The old method of 
+# embedding metadata in __init__.py will 
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.
+# Mandatory items:
+
+[general]
+name=DEM Cell Editor
+qgisMinimumVersion=2.14
+qgisMaximumVersion=2.99
+description=Map tool to set raster cell values.
+version=0.0.2
+author=KICT&HermeSys
+email=mhcho058@hermesys.co.kr
+
+about= This plugin based on serval plugin. 
+
+#tracker=http://github.com/erpas/serval/issues
+#repository=http://github.com/erpas/serval
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+changelog=
+       
+
+
+# Tags are comma separated with spaces allowed
+tags=raster, grid, pixel, value, cell, draw, nodata
+
+#homepage=https://github.com/erpas/serval/wiki
+category=Raster
+icon=icons/serval_icon.svg
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
