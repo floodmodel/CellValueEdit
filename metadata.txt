@@ -12,9 +12,9 @@ name=DEM Cell Editor
 qgisMinimumVersion=2.14
 qgisMaximumVersion=2.99
 description=Map tool to set raster cell values.
-version=0.8.1
+version=0.0.1
 author=KICT&HermeSys
-email=rpasiok@gmail.com
+email=mhcho058@hermesys.co.kr
 
 about= This plugin based on serval plugin. 
 
