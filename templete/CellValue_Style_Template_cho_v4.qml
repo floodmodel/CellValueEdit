@@ -40,7 +40,7 @@
     <property key="labeling/distMapUnitScale" value="0,0,0,0,0,0"/>
     <property key="labeling/drawLabels" value="true"/>
     <property key="labeling/enabled" value="true"/>
-    <property key="labeling/fieldName" value=" &quot;DEM&quot;  ||  '\n\n'||&quot;FD&quot; ||'\n\n' ||&quot;HYDRO&quot;"/>
+    <property key="labeling/fieldName" value=" &quot;DEM&quot;  || '\n'||&quot;FD&quot; ||'\n' ||&quot;HYDRO&quot;"/>
     <property key="labeling/fitInPolygonOnly" value="false"/>
     <property key="labeling/fontCapitals" value="0"/>
     <property key="labeling/fontFamily" value="Arial"/>
