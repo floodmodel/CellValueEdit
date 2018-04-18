@@ -10,9 +10,6 @@
     <edittype widgetv2type="TextEdit" name="FD">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
-    <edittype widgetv2type="TextEdit" name="SLOPE">
-      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-    </edittype>
   </edittypes>
   <renderer-v2 type="nullSymbol"/>
   <labeling type="simple"/>
@@ -43,7 +40,7 @@
     <property key="labeling/distMapUnitScale" value="0,0,0,0,0,0"/>
     <property key="labeling/drawLabels" value="true"/>
     <property key="labeling/enabled" value="true"/>
-    <property key="labeling/fieldName" value=" &quot;DEM&quot;   || '    ' ||   &quot;HYDRO&quot;|| '\n\n'||&quot;FD&quot;|| '\n\n'||&quot;SLOPE&quot;"/>
+    <property key="labeling/fieldName" value=" &quot;DEM&quot;  ||  '\n\n'||&quot;FD&quot; ||'\n\n' ||&quot;HYDRO&quot;"/>
     <property key="labeling/fitInPolygonOnly" value="false"/>
     <property key="labeling/fontCapitals" value="0"/>
     <property key="labeling/fontFamily" value="Arial"/>
@@ -218,7 +215,6 @@
     <alias field="DEM" index="0" name=""/>
     <alias field="HYDRO" index="1" name=""/>
     <alias field="FD" index="2" name=""/>
-    <alias field="SLOPE" index="3" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -229,7 +225,6 @@
       <column width="-1" hidden="0" type="field" name="DEM"/>
       <column width="-1" hidden="0" type="field" name="HYDRO"/>
       <column width="-1" hidden="0" type="field" name="FD"/>
-      <column width="-1" hidden="0" type="field" name="SLOPE"/>
     </columns>
   </attributetableconfig>
   <editform></editform>
@@ -264,7 +259,6 @@ def my_form_open(dialog, layer, feature):
     <default field="DEM" expression=""/>
     <default field="HYDRO" expression=""/>
     <default field="FD" expression=""/>
-    <default field="SLOPE" expression=""/>
   </defaults>
   <previewExpression>COALESCE("DEM", '&lt;NULL>')||', '||COALESCE("SLOPE", '&lt;NULL>')</previewExpression>
   <layerGeometryType>0</layerGeometryType>

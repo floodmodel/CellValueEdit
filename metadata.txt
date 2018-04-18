@@ -12,7 +12,7 @@ name=DEM Cell Editor
 qgisMinimumVersion=2.14
 qgisMaximumVersion=2.99
 description=Map tool to set raster cell values.
-version=0.0.1
+version=0.0.2
 author=KICT&HermeSys
 email=mhcho058@hermesys.co.kr
 

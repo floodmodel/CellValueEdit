@@ -18,7 +18,6 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
- *                                                                         *
  ***************************************************************************/
 """
 from PyQt4 import QtGui, uic
@@ -272,35 +271,35 @@ class Serval:
         self.toolbar.addWidget(self.cmdFD)
 
 
-        #Slop
-        self.spinLabel = QLabel("   Slope : ")
-        self.spinLabel.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
-        self.toolbar.addWidget(self.spinLabel)
+        ##Slop
+        #self.spinLabel = QLabel("   Slope : ")
+        #self.spinLabel.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        #self.toolbar.addWidget(self.spinLabel)
 
-        self.cmdSlop =QComboBox()
-        sbox.setMinimumSize(QSize(60, 25))
-        sbox.setMaximumSize(QSize(60, 25))
-        self.toolbar.addWidget(self.cmdSlop)
+        #self.cmdSlop =QComboBox()
+        #sbox.setMinimumSize(QSize(60, 25))
+        #sbox.setMaximumSize(QSize(60, 25))
+        #self.toolbar.addWidget(self.cmdSlop)
 
 
         #각각의 콤보에 레이어 목록 셋팅
         utils.SetCommbox(self,QgsMapLayerRegistry.instance().mapLayers().values(),self.cmdLayer,"tif")
         utils.SetCommbox(self,QgsMapLayerRegistry.instance().mapLayers().values(),self.cmdHydro,"tif")
         utils.SetCommbox(self,QgsMapLayerRegistry.instance().mapLayers().values(),self.cmdFD,"tif")
-        utils.SetCommbox(self,QgsMapLayerRegistry.instance().mapLayers().values(),self.cmdSlop,"tif")
+        #utils.SetCommbox(self,QgsMapLayerRegistry.instance().mapLayers().values(),self.cmdSlop,"tif")
 
         #콤보박스 선택 이벤트
         self.cmdLayer.currentIndexChanged.connect(lambda:self.Selectcmb(self.cmdLayer,"layer"))
         self.cmdHydro.currentIndexChanged.connect(lambda:self.Selectcmb(self.cmdHydro,"hydro"))
         self.cmdFD.currentIndexChanged.connect(lambda:self.Selectcmb(self.cmdFD,"fd"))
-        self.cmdSlop.currentIndexChanged.connect(lambda:self.Selectcmb(self.cmdSlop,"slope"))
+        #self.cmdSlop.currentIndexChanged.connect(lambda:self.Selectcmb(self.cmdSlop,"slope"))
 
 
 
 
     def Selectcmb(self,commbox,type):
         # 콤보 박스에서 선택된 레이어 경로 받아 오기
-        global _Fd,_Hydro,_Layer,_Slop,_mainLayer
+        global _Fd,_Hydro,_Layer,_mainLayer
         layername = commbox.currentText()
         if layername == 'select layer':
             return ""
@@ -319,8 +318,8 @@ class Serval:
             elif type.upper()=="FD":
                 _Fd=layer.dataProvider().dataSourceUri()
                 #self.MessageboxShowInfo("LAYER",str(_Fd))
-            elif type.upper()=="SLOPE":
-                _Slop=layer.dataProvider().dataSourceUri()
+            #elif type.upper()=="SLOPE":
+            #    _Slop=layer.dataProvider().dataSourceUri()
                 #self.MessageboxShowInfo("LAYER",str(_Slop))
 
 
@@ -328,7 +327,7 @@ class Serval:
         self.Active_CellValue()
 
     def Active_CellValue(self):
-        if _Fd!="" and _Hydro!="" and _Layer!="" and _Slop!="":
+        if _Fd!="" and _Hydro!="" and _Layer!="" :
             #self.MessageboxShowError("set","complete")
             self.run()
 
@@ -729,6 +728,7 @@ class Serval:
 
             #QgsMapLayerRegistry.instance().addMapLayer(self.get_cellvalue(dem, hydro,slope,Fdr))
             QgsMapLayerRegistry.instance().addMapLayer(self.get_cellvalue())
+            self.iface.legendInterface().setCurrentLayer(_mainLayer)
         except Exception as ex:
             QgsMessageLog.logMessage(str(ex),"Cell Value",QgsMessageLog.INFO)
 
@@ -745,6 +745,7 @@ class Serval:
                         QgsMapLayerRegistry.instance().removeMapLayer( item.id() )
 
             QgsMapLayerRegistry.instance().addMapLayer(self.get_cellvalue_RapidRefresh())
+            self.iface.legendInterface().setCurrentLayer(_mainLayer)
         except Exception as ex:
             QgsMessageLog.logMessage(str(ex),"Cell Value RapidRefresh",QgsMessageLog.INFO)
 
@@ -763,7 +764,7 @@ class Serval:
         #TIF_file_hydro = hydro.dataProvider().dataSourceUri()
         asc_file_hydro = strTempFolder + r"\2.asc"
         #TIF_file_slope = slope.dataProvider().dataSourceUri()
-        asc_file_slope = strTempFolder + r"\3.asc"
+        #asc_file_slope = strTempFolder + r"\3.asc"
         #TIF_file_fdr = Fdr.dataProvider().dataSourceUri()
         asc_file_fdr = strTempFolder + r"\4.asc"
 
@@ -779,7 +780,7 @@ class Serval:
         #tif 파일 asc로 변경하는 함수
         self.Convert_TIFF_To_ASCii(_Layer,asc_file_dem)
         self.Convert_TIFF_To_ASCii(_Hydro,asc_file_hydro)
-        self.Convert_TIFF_To_ASCii(_Slop,asc_file_slope)
+        #self.Convert_TIFF_To_ASCii(_Slop,asc_file_slope)
         self.Convert_TIFF_To_ASCii(_Fd,asc_file_fdr)
 
 
@@ -789,7 +790,7 @@ class Serval:
         #asc 파일 읽기(dem, hydro, slope, fdr)
         ascii_grid_dem = np.loadtxt(asc_file_dem, skiprows=6)	#skip 6 . caution!
         ascii_grid_hydro = np.loadtxt(asc_file_hydro, skiprows=6)	#skip 6 . caution! 
-        ascii_grid_slope = np.loadtxt(asc_file_slope, skiprows=6)	#skip 6 . caution! 
+        #ascii_grid_slope = np.loadtxt(asc_file_slope, skiprows=6)	#skip 6 . caution! 
         ascii_grid_fdr = np.loadtxt(asc_file_fdr, skiprows=6)	#skip 6 . caution!  
 
 
@@ -804,7 +805,7 @@ class Serval:
         resV = point_provider.addAttributes( [ QgsField("DEM",QVariant.String) ] )#dem table
         resH = point_provider.addAttributes( [ QgsField("HYDRO",QVariant.String) ] )#hydro table
         resFD = point_provider.addAttributes( [ QgsField("FD",QVariant.String) ] )#fdr table
-        resS = point_provider.addAttributes( [ QgsField("SLOPE",QVariant.String) ] )#slope table
+        #resS = point_provider.addAttributes( [ QgsField("SLOPE",QVariant.String) ] )#slope table
         
         
         gridWidth = _mainLayer.rasterUnitsPerPixelX()
@@ -833,7 +834,7 @@ class Serval:
 
                     value1=ascii_grid_dem[rows-j-1,i] #dem
                     value2=ascii_grid_hydro[rows-j-1,i] #hydro
-                    value3=ascii_grid_slope[rows-j-1,i] #slope
+                    #value3=ascii_grid_slope[rows-j-1,i] #slope
                     value4=ascii_grid_fdr[rows-j-1,i] #fdr
 
                     #fdr value 변환.. 화살표 라벨
@@ -842,9 +843,9 @@ class Serval:
                     
                     value1= format(value1,".{0}f".format(str(self.b2SBox.text()))) #dem, 값 소수점 자리
                     value2= format(value2,".{0}f".format(str(self.b2SBox.text()))) #hydro, 소수점자리 결정 포맷은 self.b2SBox
-                    value3= format(value3,".{0}f".format(str(self.b2SBox.text()))) #slope
+                    #value3= format(value3,".{0}f".format(str(self.b2SBox.text()))) #slope
 
-                    feat.setAttributes([value1,value2,value4new,value3])
+                    feat.setAttributes([value1,value2,value4new])
                     point_provider.addFeatures([feat])
 
         point_layer.commitChanges()
