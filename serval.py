@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Serval
+ Serval  https://github.com/erpas/serval
                                  A QGIS plugin
  Set Raster Values
                               -------------------
@@ -121,8 +121,8 @@ class Serval:
 
         self.probe_btn2 = self.add_action(
             os.path.join(self.plugin_dir, 'icons/Setting.jpg'),
-            text=u'Reload fd,hydero....',
-            whats_this=u'Reload fd,hydero....',
+            text=u'Reload fd,hydro....',
+            whats_this=u'Reload fd,hydro....',
             add_to_toolbar=True,
             callback=self.Reload,
             parent=self.iface.mainWindow())
@@ -207,7 +207,12 @@ class Serval:
     # 2018 04-10 박: Slop,hydro,fd 새로 작성 
     def Reload(self):
         try:
-            self.Execute_taudem()
+            msg = 'This function recalculates HydroDEM, FD in DEM.\n'
+            msg += 'It also takes time because it is LABELING for all CELLs.\n'
+            msg += 'Do you want to do that?'
+            result = QMessageBox.question(None, "DEM Cell Editor", msg, QMessageBox.Yes, QMessageBox.No)
+            if result == QMessageBox.Yes:
+                self.Execute_taudem()
         except Exception as es:
             self.MessageboxShowInfo("error",str(es))
 
