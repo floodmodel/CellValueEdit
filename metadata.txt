@@ -13,7 +13,7 @@ qgisMinimumVersion=2.14
 qgisMaximumVersion=2.99
 description=Map tool to set raster cell values.
 version=0.0.4
-author=KICT&HermeSys
+author=KICT & HermeSys
 email=mhcho058@hermesys.co.kr
 
 about= This plugin based on serval plugin. 
