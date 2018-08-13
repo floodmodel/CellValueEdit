@@ -230,6 +230,21 @@ class Serval:
         sbox.setStyleSheet("")
         self.toolbar.addWidget(sbox)
 
+#=======2018/06/18 셀 위치(행렬) 보여주는 라벨
+        #셀 위치(행렬) 라벨
+        self.positionLabel = QLabel("   Xcols, Yrows :    ")
+        self.positionLabel.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.toolbar.addWidget(self.positionLabel)
+        
+        #xcols 값
+        #라벨에 이미 값이 들어 있으면 값이 나오지 않음... 
+        self.position_xy_Label = QLabel()
+        self.position_xy_Label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.toolbar.addWidget(self.position_xy_Label)
+        
+#=======2018/06/18
+        
+              
         #소수점 spin 박스 라벨
         self.spinLabel = QLabel("   Decimal : ")
         self.spinLabel.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
@@ -364,7 +379,11 @@ class Serval:
                 self.uc.bar_warn("Point coordinates transformation failed! Check the raster projection.", dur=5)
                 return
         else:
+            #여기서 click 시 map 상 좌표값 얻을 수 있음
             pos = QgsPoint(point.x(), point.y())
+            #여기서 행렬 값을 계산합니다.
+            #이거 제거. 필요없었네..
+#             self.cell_position(pos.x(),pos.y())
         
         # keep last clicked point
         self.last_point = pos
@@ -372,16 +391,26 @@ class Serval:
         # check if the point is within active raster bounds
         if pos.x() >= self.rbounds[0] and pos.x() <= self.rbounds[2]:
             self.px = int((pos.x() - self.gt[0]) / self.gt[1])
+#             print "self.px", self.px
         else:
             self.uc.bar_info("Out of x bounds", dur=2)
             return
 
         if  pos.y() >= self.rbounds[1] and pos.y() <= self.rbounds[3]:
             self.py = int((pos.y() - self.gt[3]) / self.gt[5])
+#             print "self.py", self.py
         else:
             self.uc.bar_info("Out of y bounds", dur=2)
             return
         
+#========2018/06/19 여기서 x,y 라벨에 행렬 값을 출력함
+#특수 조건 : 콤보 박스에 레이어가 선택이 되어 있어야 함.
+    
+        if _mainLayer != {}:
+            self.position_xy_Label.setText(str(self.px)+", "+str(self.py))
+#         self.cell_position(pos.x(),pos.y())
+#========2018/06/19
+
         # temporary tables for undo/redo values
         old_vals = []
         new_vals = []
@@ -1040,3 +1069,37 @@ class Serval:
 
     def call(*popenargs, **kwargs):
        return Popen(*popenargs, **kwargs).wait()
+   
+
+#이건 필요없는 행동이었어요.. 우엥 이거 만든 사람이 참 많은 걸 해줬네요.. 다 있어.. 허허허허허
+
+# #=======2018/06/18    셀 클릭시 위치값을 라벨에 보여주는 기능
+# # 레이어 기본 값을 Global 로 지정해서 정의
+#     def set_layer_calc(self):
+#         global _xsize, _ysize,_extent,_ymax,_ymin,_xmax,_xmin
+#         _xsize = _mainLayer.rasterUnitsPerPixelX()
+#         _ysize = _mainLayer.rasterUnitsPerPixelY()
+#         _extent = _mainLayer.extent()
+#         _ymax = _extent.yMaximum()
+#         _ymin = _extent.yMinimum()
+#         _xmax = _extent.xMaximum()
+#         _xmin = _extent.xMinimum()
+# 
+#     def cell_position(self,x,y):
+# #         print "layer : {0}, x, Y : {1}, {2}".format(_Layer,x,y)
+#         #콤보박스 레이어에 선택된 레이어가 없으면 다음을 수행하지 않음
+#         #콤보박스에서 선택된 레이어는 _mainLayer 
+#         if _mainLayer !={}:
+# #             _width = _mainLayer.width()
+# #             _height = _mainLayer.height()
+#             self.set_layer_calc()
+#             
+#             #행, 렬 값
+#             _row = int(((_ymax - y) / _ysize))
+#             _column = int(((x - _xmin) / _xsize))
+#             
+# #             self.uc.bar_info("Out of x bounds", dur=2)
+# #             print "??",self.uc
+# #             print _row, _column
+#             #라벨 값에 _row, _column 값을 보여줌(계산된 값)
+#             self.position_xy_Label.setText(str(_row)+", "+str(_column))

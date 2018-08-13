@@ -16,7 +16,8 @@ version=0.0.4
 author=KICT&HermeSys
 email=mhcho058@hermesys.co.kr
 
-about= This plugin based on serval plugin. 
+about= This plugin based on serval (https://github.com/erpas/serval)  plugin. 
+ 
 
 #tracker=http://github.com/erpas/serval/issues
 #repository=http://github.com/erpas/serval
